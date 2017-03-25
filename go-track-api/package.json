@@ -1,0 +1,15 @@
+{
+  "name": "go-track-api",
+  "version": "1.0.0",
+  "description": "go-track API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sailly (Ahmad Zaky @azaky, Alif Raditya Rochman @alifradityar, Andre Susanto @andresusanto)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  }
+}
