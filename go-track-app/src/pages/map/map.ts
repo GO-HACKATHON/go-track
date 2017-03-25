@@ -10,6 +10,7 @@ import { TrackeeDetailPage } from '../trackee-detail/trackee-detail';
 import { SettingsPage } from '../settings/settings';
 import { Trackees } from '../../providers/providers';
 import { Geolocation } from '@ionic-native/geolocation';
+import moment from 'moment';
 
 declare var google;
 
@@ -89,6 +90,11 @@ TxtOverlay.prototype.onRemove = function() {
   this.div_.parentNode.removeChild(this.div_);
   this.div_ = null;
 }
+
+TxtOverlay.prototype.setPosition = function(pos) {
+  this.pos = pos;
+}
+
 TxtOverlay.prototype.hide = function() {
   if (this.div_) {
     this.div_.style.visibility = "hidden";
@@ -154,12 +160,10 @@ export class PopoverPage {
   templateUrl: 'map.html'
 })
 export class MapPage {
-  trackeeList: any;
-  circleList: any;
-  overlayList: any;
   trackeesList: any;
   gmap: any;
   mypos: any;
+  appliedFilter: string = "all";
   @ViewChild('map') map;
 
   constructor(
@@ -182,38 +186,45 @@ export class MapPage {
 
     this.trackeesList.map((trackee, idx) => {
       this.trackees.getLocationById(trackee.id, (locations) => {
-        var loc = locations[0].location;
-
-        let circle = new google.maps.Circle({
-          strokeColor: '#F57C00',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FFE0B2',
-          fillOpacity: 0.35,
-          map: this.gmap,
-          center: { lat: loc.latitude, lng: loc.longitude },
-          radius: loc.accuracy
-        });
-        
-        var customTxt = `
-          <div style="transform:translateX(-50%);">
-            <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid #26c6da; margin-left: auto; margin-right: auto"></div> 
-            <div style="background-color: #26c6da; color: #fff; padding: 5px 15px 8px 15px; width: 135px; text-align: center;">
-              <h3 style=" margin-top: 0px; margin-bottom: 0px; font-size: 2rem;" > ${trackee.name} </h3> 
-            </div>
-            <div style="text-align: center; margin-top: -7px;"> 
-              <span style="background-color: #fff; font-size: 1rem; padding: 2px; text-align: center;"> 22 min ago </span>
-            </div>
-          </div>
-        `;
-        this.trackeeList.push(trackee);
-        this.circleList.push(circle);
-        var overlay = new TxtOverlay(new google.maps.LatLng(loc.latitude, loc.longitude), customTxt, "customBox", this.gmap, () => {
-          this.nav.push(TrackeeDetailPage, {
-            trackee: trackee, location: loc
+        const loc = locations[0].location;
+        const timeAgo = moment(locations[0].timestamp).fromNow();
+        if (!this.trackeesList[idx].circle) {
+          let circle = new google.maps.Circle({
+            strokeColor: '#F57C00',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FFE0B2',
+            fillOpacity: 0.35,
+            map: this.gmap,
+            center: { lat: loc.latitude, lng: loc.longitude },
+            radius: loc.accuracy
           });
-        });
-        this.overlayList.push(overlay);
+          this.trackeesList[idx].circle = circle;
+        } else {
+          this.trackeesList[idx].circle.setCenter({ lat: loc.latitude, lng: loc.longitude });
+        }
+
+        if (!this.trackeesList[idx].overlay) {
+          var customTxt = `
+            <div style="transform:translateX(-50%);">
+              <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid #26c6da; margin-left: auto; margin-right: auto"></div> 
+              <div style="background-color: #26c6da; color: #fff; padding: 5px 15px 8px 15px; width: 135px; text-align: center;">
+                <h3 style=" margin-top: 0px; margin-bottom: 0px; font-size: 2rem;" > ${trackee.name} </h3> 
+              </div>
+              <div style="text-align: center; margin-top: -7px;"> 
+                <span style="background-color: #fff; font-size: 1rem; padding: 2px; text-align: center;"> ${timeAgo} </span>
+              </div>
+            </div>
+          `;
+          var overlay = new TxtOverlay(new google.maps.LatLng(loc.latitude, loc.longitude), customTxt, "customBox", this.gmap, () => {
+            this.nav.push(TrackeeDetailPage, {
+              trackee: trackee, location: loc
+            });
+          });
+          this.trackeesList[idx].overlay = overlay;
+        } else {
+          this.trackeesList[idx].overlay.setPosition(new google.maps.LatLng(loc.latitude, loc.longitude));
+        }
 
         if (curTrackees++ == trackeesLen - 1) {
           setTimeout(this.updateLocs.bind(this), 500);
@@ -233,9 +244,7 @@ export class MapPage {
 
     this.gmap.setOptions({ minZoom: 11, maxZoom: 20 });
 
-    this.trackeeList = [];
-    this.overlayList = [];
-    this.circleList = [];
+    this.trackeesList = [];
 
     this.trackees.getList((data) => {
       this.trackeesList = data;
@@ -285,20 +294,22 @@ export class MapPage {
   }
 
   selectAll() {
-    this.trackeeList.map((t, idx) => {
-      this.overlayList[idx].show();
-      this.circleList[idx].setMap(this.gmap);
+    this.appliedFilter = "all";
+    this.trackeesList.map((t, idx) => {
+      this.trackeesList[idx].overlay.show();
+      this.trackeesList[idx].circle.setMap(this.gmap);
     });
   }
 
   selectCategory(category) {
-    this.trackeeList.map((t, idx) => {
+    this.appliedFilter = category;
+    this.trackeesList.map((t, idx) => {
       if (t.category == category) {
-        this.overlayList[idx].show();
-        this.circleList[idx].setMap(this.gmap);
+        this.trackeesList[idx].overlay.show();
+        this.trackeesList[idx].circle.setMap(this.gmap);
       } else {
-        this.overlayList[idx].hide();
-        this.circleList[idx].setMap(null);
+        this.trackeesList[idx].overlay.hide();
+        this.trackeesList[idx].circle.setMap(null);
       }
     });
   }
