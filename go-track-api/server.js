@@ -4,6 +4,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const logger = require('./logger');
+const admin = require('firebase-admin');
+const FirebaseService = require('./services/FirebaseService');
+
+admin.initializeApp({
+    credential: admin.credential.cert(require('./secrets/firebase.json')),
+    databaseURL: config.firebase.databaseUrl
+});
+const firebaseService = new FirebaseService();
 
 const app = express();
 
@@ -26,6 +34,20 @@ app.use(expressLogger);
 
 app.get('/', (req, res) => {
     res.status(200).json({ status: 'Go-Track API' });
+});
+
+app.get('/firebase_test/:key', (req, res) => {
+    firebaseService.get(req.params.key)
+        .then((value) => {
+            res.status(200).json(value);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                status: 'Internal Server Error',
+                code: '500',
+                message: err.message || 'Unknown Error'
+            });
+        });
 });
 
 // Unhandled 500

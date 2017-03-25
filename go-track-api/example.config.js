@@ -7,5 +7,8 @@ module.exports = {
     },
     server: {
         port: 8000
+    },
+    firebase: {
+        databaseUrl: 'https://example.firebaseio.com/'
     }
 };

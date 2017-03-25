@@ -67,3 +67,6 @@ typings/
 
 # Config file
 config.js
+
+# Secrets
+secrets/
