@@ -5,9 +5,9 @@ This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Serv
 
 ## Content
 1. [Introduction](#introduction)
-2. [How to run](PITCHDECK.pdf)
+2. How to run
 3. API Docs
-4. Pitch Deck
+4. [Pitch Deck](PITCHDECK.pdf)
 
 ## Introduction
 
