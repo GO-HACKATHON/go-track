@@ -22,6 +22,7 @@ import { Api } from '../providers/api';
 import { Settings } from '../providers/settings';
 import { Items } from '../mocks/providers/items';
 import { Bluetooth } from '../providers/bluetooth';
+import { Trackees } from '../providers/trackees';
 import { BLE } from '@ionic-native/ble';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -85,6 +86,7 @@ export function providers() {
     Api,
     Items,
     Bluetooth,
+    Trackees,
     BLE,
     Geolocation,
 

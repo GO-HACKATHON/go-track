@@ -15,25 +15,10 @@
     <ion-searchbar class="search"></ion-searchbar>
     <ion-list>
         <ion-list-header>Recently Tracked</ion-list-header>
-        <ion-item (click)="goToDetail()">
-            <h2>Dompet Kulit</h2>
-            <p>Personal</p>
+        <ion-item *ngFor="let tl of trackeeAndLocationList" (click)="goToDetail(tl)">
+            <h2>{{tl.trackee.name}}</h2>
+            <p>{{tl.trackee.category[0].toUpperCase() + tl.trackee.category.slice(1)}}</p>
             <ion-note item-right>< 10 M</ion-note>
-        </ion-item>
-        <ion-item (click)="goToDetail()">
-            <h2>Kunci Kantor</h2>
-            <p>Personal</p>
-            <ion-note item-right> 13 M</ion-note>
-        </ion-item>
-        <ion-item (click)="goToDetail()">
-            <h2>Kunci Rumah</h2>
-            <p>Personal</p>
-            <ion-note item-right> 13 M</ion-note>
-        </ion-item>
-        <ion-item (click)="goToDetail()">
-            <h2>Sepeda</h2>
-            <p>Kendaraan</p>
-            <ion-note item-right> 1 KM</ion-note>
         </ion-item>
         <ion-list-header>Tracked within a week</ion-list-header>
         <ion-item (click)="goToDetail()">

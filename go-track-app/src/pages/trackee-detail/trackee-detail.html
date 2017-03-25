@@ -6,7 +6,7 @@
             </button>
         </ion-buttons>
 		<ion-title>
-			Trackee X
+			Trackee {{ trackee.name }}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -30,13 +30,13 @@
         <ion-item>
             ID
             <ion-note item-right>
-                f4204572-257d-4785-b944-ad43c687b0d3
+                {{ trackee.id }}
             </ion-note>
         </ion-item>
         <ion-item>
             Nama
             <ion-note item-right>
-                Dompet Kulit
+                {{ trackee.name }}
             </ion-note>
         </ion-item>
         <ion-item>

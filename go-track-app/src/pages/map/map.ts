@@ -8,10 +8,9 @@ import { TrackeeAddPage } from '../trackee-add/trackee-add';
 import { TrackeeListPage } from '../trackee-list/trackee-list';
 import { TrackeeDetailPage } from '../trackee-detail/trackee-detail';
 import { SettingsPage } from '../settings/settings';
+import { Trackees } from '../../providers/providers';
 
 declare var google;
-
-
 
 function TxtOverlay(pos, txt, cls, map, callback) {
 
@@ -154,9 +153,13 @@ export class PopoverPage {
   templateUrl: 'map.html'
 })
 export class MapPage {
+  trackeeList: any;
+  circleList: any;
+  overlayList: any;
+  gmap: any;
   @ViewChild('map') map;
 
-  constructor(public nav: NavController, public platform: Platform, public popoverCtrl: PopoverController) {}
+  constructor(public nav: NavController, public platform: Platform, public popoverCtrl: PopoverController, private trackees: Trackees) {}
 
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
@@ -166,7 +169,7 @@ export class MapPage {
   }
 
   initJSMaps(mapEle) {
-    let map = new google.maps.Map(mapEle, {
+    this.gmap = new google.maps.Map(mapEle, {
       center: { lat: -6.2416331, lng: 106.7945741 },
       zoom: 16,
       mapTypeControl: false,
@@ -174,45 +177,51 @@ export class MapPage {
       fullscreenControl: false
     });
 
-    map.setOptions({ minZoom: 11, maxZoom: 20 });
+    this.gmap.setOptions({ minZoom: 11, maxZoom: 20 });
 
-    new google.maps.Circle({
-      strokeColor: '#F57C00',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FFE0B2',
-      fillOpacity: 0.35,
-      map: map,
-      center: { lat: -6.2416331, lng: 106.7945741 },
-      radius: 100
+    this.trackeeList = [];
+    this.overlayList = [];
+    this.circleList = [];
+
+    this.trackees.getList((data) => {
+      data.map((trackee, idx) => {
+        this.trackees.getLocationById(trackee.id, (locations) => {
+          var loc = locations[0].location;
+
+          let circle = new google.maps.Circle({
+            strokeColor: '#F57C00',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FFE0B2',
+            fillOpacity: 0.35,
+            map: this.gmap,
+            center: { lat: loc.latitude, lng: loc.longitude },
+            radius: loc.accuracy
+          });
+          
+
+          var customTxt = `
+            <div style="transform:translateX(-50%);">
+              <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid #26c6da; margin-left: auto; margin-right: auto"></div> 
+              <div style="background-color: #26c6da; color: #fff; padding: 5px 15px 8px 15px; width: 135px; text-align: center;">
+                <h3 style=" margin-top: 0px; margin-bottom: 0px; font-size: 2rem;" > ${trackee.name} </h3> 
+              </div>
+              <div style="text-align: center; margin-top: -7px;"> 
+                <span style="background-color: #fff; font-size: 1rem; padding: 2px; text-align: center;"> 22 min ago </span>
+              </div>
+            </div>
+          `;
+          this.trackeeList.push(trackee);
+          this.circleList.push(circle);
+          var overlay = new TxtOverlay(new google.maps.LatLng(loc.latitude, loc.longitude), customTxt, "customBox", this.gmap, () => {
+            this.nav.push(TrackeeDetailPage, {
+              trackee: trackee, location: loc
+            });
+          });
+          this.overlayList.push(overlay);
+        });
+      });
     });
-
-
-    var swBound = new google.maps.LatLng(-6.2416331 - 0.2, 106.7945741 - 0.2);
-    var neBound = new google.maps.LatLng(-6.2416331 + 0.2, 106.7945741 + 0.2);
-    var bounds = new google.maps.LatLngBounds(swBound, neBound);
-
-    var customTxt = `
-      <div style="transform:translateX(-50%);">
-        <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid #26c6da; margin-left: auto; margin-right: auto"></div> 
-        <div style="background-color: #26c6da; color: #fff; padding: 5px 15px 8px 15px;">
-          <h3 style=" margin-top: 0px; margin-bottom: 0px; font-size: 2rem;" > Dompet </h3> 
-        </div>
-        <div style="text-align: center; margin-top: -7px;"> 
-          <span style="background-color: #fff; font-size: 1rem; padding: 2px; text-align: center;"> 22 min ago </span>
-        </div>
-      </div>
-    `;
-
-    var txt = new TxtOverlay(new google.maps.LatLng(-6.2416331, 106.7945741), customTxt, "customBox", map, () => {
-      console.log("ampas");
-      this.nav.push(TrackeeDetailPage);
-    });
-    // new google.maps.Marker({
-    //   position: { lat: -6.2416331, lng: 106.7945741 },
-    //   label: "Kunci (22 min ago)",
-    //   map: map
-    // });
   }
 
   initNativeMaps(mapEle) {
@@ -234,15 +243,25 @@ export class MapPage {
     }
 
     this.initJSMaps(mapEle);
+  }
 
-    // Disable this switch if you'd like to only use JS maps, as the APIs
-    // are slightly different between the two. However, this makes it easy
-    // to use native maps while running in Cordova, and JS maps on the web.
-    // if (this.platform.is('cordova') === true) {
-    //   this.initNativeMaps(mapEle);
-    // } else {
-    //   this.initJSMaps(mapEle);
-    // }
+  selectAll() {
+    this.trackeeList.map((t, idx) => {
+      this.overlayList[idx].show();
+      this.circleList[idx].setMap(this.gmap);
+    });
+  }
+
+  selectCategory(category) {
+    this.trackeeList.map((t, idx) => {
+      if (t.category == category) {
+        this.overlayList[idx].show();
+        this.circleList[idx].setMap(this.gmap);
+      } else {
+        this.overlayList[idx].hide();
+        this.circleList[idx].setMap(null);
+      }
+    });
   }
 
 }
