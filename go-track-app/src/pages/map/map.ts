@@ -93,6 +93,11 @@ TxtOverlay.prototype.onRemove = function() {
 
 TxtOverlay.prototype.setPosition = function(pos) {
   this.pos = pos;
+  var overlayProjection = this.getProjection();
+  var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+  if (this.div_) this.div_.style.left = position.x + 'px';
+  if (this.div_) this.div_.style.top = position.y + 'px';
+  if (this.div_) this.div_.style.position = 'absolute';
 }
 
 TxtOverlay.prototype.hide = function() {
@@ -181,6 +186,8 @@ export class MapPage {
   }
 
   updateLocs() {
+    console.log('ampashu ... ');
+    
     const trackeesLen = this.trackeesList.length;
     let curTrackees = 0;
 
@@ -189,6 +196,7 @@ export class MapPage {
         const loc = locations[0].location;
         const timeAgo = moment(locations[0].timestamp).fromNow();
         if (!this.trackeesList[idx].circle) {
+          console.log("A: " + JSON.stringify(loc));
           let circle = new google.maps.Circle({
             strokeColor: '#F57C00',
             strokeOpacity: 0.8,
@@ -201,6 +209,7 @@ export class MapPage {
           });
           this.trackeesList[idx].circle = circle;
         } else {
+          console.log("B: " + JSON.stringify(loc));
           this.trackeesList[idx].circle.setCenter({ lat: loc.latitude, lng: loc.longitude });
         }
 
@@ -227,7 +236,7 @@ export class MapPage {
         }
 
         if (curTrackees++ == trackeesLen - 1) {
-          setTimeout(this.updateLocs.bind(this), 500);
+          setTimeout(this.updateLocs.bind(this), 1000);
         }
       });
     });
