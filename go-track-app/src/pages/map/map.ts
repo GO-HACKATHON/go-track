@@ -157,6 +157,7 @@ export class MapPage {
   trackeeList: any;
   circleList: any;
   overlayList: any;
+  trackeesList: any;
   gmap: any;
   mypos: any;
   @ViewChild('map') map;
@@ -166,7 +167,6 @@ export class MapPage {
     public platform: Platform,
     public popoverCtrl: PopoverController,
     private trackees: Trackees, 
-    private trackeesList: any,
     private geolocation: Geolocation) { }
 
   presentPopover(myEvent) {
@@ -240,43 +240,6 @@ export class MapPage {
     this.trackees.getList((data) => {
       this.trackeesList = data;
       setTimeout(this.updateLocs.bind(this), 500);
-
-      // data.map((trackee, idx) => {
-      //   this.trackees.getLocationById(trackee.id, (locations) => {
-      //     var loc = locations[0].location;
-
-      //     let circle = new google.maps.Circle({
-      //       strokeColor: '#F57C00',
-      //       strokeOpacity: 0.8,
-      //       strokeWeight: 2,
-      //       fillColor: '#FFE0B2',
-      //       fillOpacity: 0.35,
-      //       map: this.gmap,
-      //       center: { lat: loc.latitude, lng: loc.longitude },
-      //       radius: loc.accuracy
-      //     });
-          
-      //     var customTxt = `
-      //       <div style="transform:translateX(-50%);">
-      //         <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid #26c6da; margin-left: auto; margin-right: auto"></div> 
-      //         <div style="background-color: #26c6da; color: #fff; padding: 5px 15px 8px 15px; width: 135px; text-align: center;">
-      //           <h3 style=" margin-top: 0px; margin-bottom: 0px; font-size: 2rem;" > ${trackee.name} </h3> 
-      //         </div>
-      //         <div style="text-align: center; margin-top: -7px;"> 
-      //           <span style="background-color: #fff; font-size: 1rem; padding: 2px; text-align: center;"> 22 min ago </span>
-      //         </div>
-      //       </div>
-      //     `;
-      //     this.trackeeList.push(trackee);
-      //     this.circleList.push(circle);
-      //     var overlay = new TxtOverlay(new google.maps.LatLng(loc.latitude, loc.longitude), customTxt, "customBox", this.gmap, () => {
-      //       this.nav.push(TrackeeDetailPage, {
-      //         trackee: trackee, location: loc
-      //       });
-      //     });
-      //     this.overlayList.push(overlay);
-      //   });
-      // });
     });
   }
 
