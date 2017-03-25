@@ -7,7 +7,7 @@ import { Api } from './api';
 @Injectable()
 export class Trackees {
 
-  baseUrl: string = "https://go-track-api.herokuapp.com"; 
+  baseUrl: string = "https://gotrack.susan.to"; 
 
   constructor(private http: Http) {
   }
