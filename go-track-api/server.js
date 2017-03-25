@@ -23,7 +23,7 @@ const expressLogger = (req, res, next) => {
 
 const jsonErrorHandler = (error, req, res, next) => {
     if (error instanceof SyntaxError) {
-        res.status(400).json({ status: 'Bad Request', code: 400, message: 'Invalid JSON' });
+        res.status(400).json({ code: 400, message: 'Invalid JSON' });
     } else {
         next();
     }
@@ -44,7 +44,6 @@ app.get('/firebase_test/:key', (req, res) => {
         })
         .catch((err) => {
             res.status(500).json({
-                status: 'Internal Server Error',
                 code: 500,
                 message: err.message || 'Unknown Error'
             });
@@ -54,14 +53,12 @@ app.get('/firebase_test/:key', (req, res) => {
 app.post('/update', (req, res) => {
     if (!req.body.location || !req.body.location.longitude || !req.body.location.latitude) {
         return res.status(400).json({
-            status: 'Bad Request',
             code: 400,
             message: 'Location data is invalid'
         });
     }
     if (!_.isArray(req.body.devices)) {
         return res.status(400).json({
-            status: 'Bad Request',
             code: 400,
             message: 'Devices data is invalid'
         });
@@ -83,18 +80,38 @@ app.post('/update', (req, res) => {
         res.status(200).send();
     }).catch((err) => {
         res.status(500).json({
-            status: 'Internal Server Error',
             code: 500,
             message: `Error while updating data: ${err.message}`
         });
     });
 });
 
+app.get('/getLocation/:deviceId', (req, res) => {
+    const deviceId = req.params.deviceId;
+    const n = req.query.n || 1;
+    firebaseService.getLastLocations(deviceId, n)
+        .then((data) => {
+            if (!data) {
+                res.status(404).json({
+                    code: 404,
+                    message: `No data found for device id ${deviceId}`
+                });
+            } else {
+                res.status(200).json(data);
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                code: 500,
+                message: `Error while retrieving data: ${err.message}`
+            });
+        });
+});
 
 // Unhandled 500
 app.use((error, req, res, next) => {
     logger.error('Uncaught error: ', error);
-    res.status(500).json({ status: 'Internal Server Error', code: 500 });
+    res.status(500).json({ message: 'Unknown Error', code: 500 });
 });
 
 const port = process.env.PORT || config.server.port;

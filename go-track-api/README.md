@@ -85,3 +85,26 @@ POST /update
 ```
 
 Distance and accuracy are in meters.
+
+### Get Devices Location
+
+```
+GET /getLocation/:id?n=1
+```
+
+`n` is the maximum number of locations to fetch. If not provided, then the default value `n = 1` will be used.
+
+Response:
+
+```json
+{
+  "lastKnownLocations": [{
+    "timestamp": 1490302121149,
+    "location": {
+        "latitude": -6.9190999,
+        "longitude": 107.5974217,
+        "accuracy": 26.4
+    },
+  }]
+}
+```

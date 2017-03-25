@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const admin = require('firebase-admin');
 const Promise = require('bluebird');
 const logger = require('../logger');
@@ -45,6 +46,15 @@ class FirebaseService {
         return this.push(`raw/${deviceId}`, locationTimestamp);
     }
 
+    getLastLocations(deviceId, n) {
+        logger.info(`Getting ${n} last known location for deviceId ${deviceId}`);
+        return this.get(`raw/${deviceId}`)
+            .then((values) => {
+                const sorted = _.orderBy(values, ['timestamp'], ['desc']);
+                const size = Math.min(n, sorted.length);
+                return sorted.slice(0, size);
+            });
+    }
 }
 
 module.exports = FirebaseService;
