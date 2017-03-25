@@ -50,7 +50,7 @@ app.get('/firebase_test/:key', (req, res) => {
         });
 });
 
-app.post('/update', (req, res) => {
+app.post('/location', (req, res) => {
     if (!req.body.location || !req.body.location.longitude || !req.body.location.latitude) {
         return res.status(400).json({
             code: 400,
@@ -86,7 +86,7 @@ app.post('/update', (req, res) => {
     });
 });
 
-app.get('/getLocation/:deviceId', (req, res) => {
+app.get('/locationById/:deviceId', (req, res) => {
     const deviceId = req.params.deviceId;
     const n = req.query.n || 1;
     firebaseService.getLastLocations(deviceId, n)

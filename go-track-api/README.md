@@ -66,7 +66,7 @@ $ nodemon server.js
 ### Send Location Updates
 
 ```json
-POST /update
+POST /location
 
 {
   "location": {
@@ -89,7 +89,7 @@ Distance and accuracy are in meters.
 ### Get Devices Location
 
 ```
-GET /getLocation/:id?n=1
+GET /locationById/:id?n=1
 ```
 
 `n` is the maximum number of locations to fetch. If not provided, then the default value `n = 1` will be used.
