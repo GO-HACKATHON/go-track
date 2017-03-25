@@ -1,0 +1,65 @@
+<ion-header>
+	<ion-toolbar danger>
+        <ion-buttons left>
+            <button ion-button navPop left>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+		<ion-title>
+			Trackee X
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="trackee-detail">
+    <div #map id="map"></div>
+    <ion-list>
+        <ion-item>
+            Latest position
+            <ion-note item-right>
+                Monas, Jakarta Pusat
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Distance
+            <ion-note item-right>
+                20 M
+            </ion-note>
+            <button ion-button clear item-right (click)="goToSense()">Sense</button>
+        </ion-item>
+        <ion-item>
+            ID
+            <ion-note item-right>
+                f4204572-257d-4785-b944-ad43c687b0d3
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Nama
+            <ion-note item-right>
+                Dompet Kulit
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Kategori
+            <ion-note item-right>
+                Personal
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            Notification setting
+            <ion-note item-right>
+                > 50 Meter
+            </ion-note>
+        </ion-item>
+        
+        <button ion-item (click)="goToNotificationHistory()">
+            Notification history
+        </button>
+        <button ion-item (click)="goToEdit()">
+            Edit
+        </button>
+        <button ion-item style="color:red" (click)="handleDelete()">
+            Delete
+        </button> 
+    </ion-list>
+</ion-content>

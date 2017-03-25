@@ -1,0 +1,56 @@
+<ion-header>
+	<ion-toolbar danger>
+        <ion-buttons left>
+            <button ion-button navPop left>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+		<ion-title>
+			List Trackee
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="trackee-list">
+    <ion-searchbar class="search"></ion-searchbar>
+    <ion-list>
+        <ion-list-header>Recently Tracked</ion-list-header>
+        <ion-item (click)="goToDetail()">
+            <h2>Dompet Kulit</h2>
+            <p>Personal</p>
+            <ion-note item-right>< 10 M</ion-note>
+        </ion-item>
+        <ion-item (click)="goToDetail()">
+            <h2>Kunci Kantor</h2>
+            <p>Personal</p>
+            <ion-note item-right> 13 M</ion-note>
+        </ion-item>
+        <ion-item (click)="goToDetail()">
+            <h2>Kunci Rumah</h2>
+            <p>Personal</p>
+            <ion-note item-right> 13 M</ion-note>
+        </ion-item>
+        <ion-item (click)="goToDetail()">
+            <h2>Sepeda</h2>
+            <p>Kendaraan</p>
+            <ion-note item-right> 1 KM</ion-note>
+        </ion-item>
+        <ion-list-header>Tracked within a week</ion-list-header>
+        <ion-item (click)="goToDetail()">
+            <h2>PS4 Baru</h2>
+            <p>Lainnya</p>
+            <ion-note item-right>< 218 M</ion-note>
+        </ion-item>
+        <ion-item (click)="goToDetail()">
+            <h2>Motor</h2>
+            <p>Personal</p>
+            <ion-note item-right> 894 M</ion-note>
+        </ion-item>
+        <ion-list-header>More than a week</ion-list-header>
+        <ion-item (click)="goToDetail()">
+            <h2>Mobil</h2>
+            <p>Personal</p>
+            <ion-note item-right> 3.6 KM</ion-note>
+        </ion-item>
+    </ion-list>
+</ion-content>
