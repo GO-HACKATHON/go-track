@@ -25,33 +25,23 @@ export class TutorialPage {
     public navCtrl: NavController,
     public menu: MenuController,
     public translate: TranslateService) {
-    translate.get(["TUTORIAL_SLIDE1_TITLE",
-                   "TUTORIAL_SLIDE1_DESCRIPTION",
-                   "TUTORIAL_SLIDE2_TITLE",
-                   "TUTORIAL_SLIDE2_DESCRIPTION",
-                   "TUTORIAL_SLIDE3_TITLE",
-                   "TUTORIAL_SLIDE3_DESCRIPTION",
-    ])
-    .subscribe((values) => {
-      console.log('Loaded values', values);
-      this.slides = [
-        {
-          title: values.TUTORIAL_SLIDE1_TITLE,
-          description: values.TUTORIAL_SLIDE1_DESCRIPTION,
-          image: 'assets/img/ica-slidebox-img-1.png',
-        },
-        {
-          title: values.TUTORIAL_SLIDE2_TITLE,
-          description: values.TUTORIAL_SLIDE2_DESCRIPTION,
-          image: 'assets/img/ica-slidebox-img-2.png',
-        },
-        {
-          title: values.TUTORIAL_SLIDE3_TITLE,
-          description: values.TUTORIAL_SLIDE3_DESCRIPTION,
-          image: 'assets/img/ica-slidebox-img-3.png',
-        }
-      ];
-    });
+    this.slides = [
+      {
+        title: "Introducing GO-TRACK",
+        description: "The best solution for tracking anything in the city",
+        image: 'assets/img/phone.png',
+      },
+      {
+        title: "Never lost your anything again",
+        description: "Protect your belonging and your beloved family member",
+        image: 'assets/img/blues.png',
+      },
+      {
+        title: "Just try!",
+        description: "Just do it! Future is here!",
+        image: 'assets/img/ica-slidebox-img-3.png',
+      }
+    ];
   }
 
   startApp() {
