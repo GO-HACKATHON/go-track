@@ -3,11 +3,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
+const logger = require('./logger');
 
 const app = express();
 
 const expressLogger = (req, res, next) => {
-    console.log(`[REQUEST LOGGER] ${req.method} ${req.url} with request header ${JSON.stringify(req.headers)} and body ${JSON.stringify(req.body)}`);
+    logger.info(`[REQUEST LOGGER] ${req.method} ${req.url} with request header ${JSON.stringify(req.headers)} and body ${JSON.stringify(req.body)}`);
     next();
 };
 
@@ -29,13 +30,13 @@ app.get('/', (req, res) => {
 
 // Unhandled 500
 app.use((error, req, res, next) => {
-    console.log('Uncaught error: ', error);
+    logger.error('Uncaught error: ', error);
     res.status(500).json({ status: 'Internal Server Error', code: '500' });
 });
 
 const port = process.env.PORT || config.server.port;
 const server = app.listen(port, () => {
-    console.log(`Go-Track API started on ${port}`);
+    logger.info(`Go-Track API started on ${port}`);
 });
 
 module.exports = server;

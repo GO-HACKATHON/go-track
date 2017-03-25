@@ -7,9 +7,11 @@ This is the API server for go-track. The server is responsible for:
 
 ## Running
 
-This server runs on Node (tested on Node 6.7.0, but should work on Node >= 4). Get Node from (https://nodejs.org/en/)[https://nodejs.org/en/].
+This server runs on Node (tested on Node 6.7.0, but should work on Node >= 4). Get Node from [https://nodejs.org/en/](https://nodejs.org/en/).
 
 **Running the server**
+
+First, create `config.js` file. The structure is provided in `example.config.js`. Then, run the following bash command.
 
 ```bash
 $ npm install
@@ -20,7 +22,7 @@ Go-Track API will run on port 8000 by default. Override the `server.port` on `co
 
 **Running development mode:**
 
-We use (nodemon)[https://www.npmjs.com/package/nodemon] to automatically watch changes in code and restart the server.
+We use [nodemon](https://www.npmjs.com/package/nodemon) to automatically watch changes in code and restart the server.
 
 ```bash
 $ npm install -g nodemon
