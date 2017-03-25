@@ -72,6 +72,9 @@ app.post('/firebase_test/:key', (req, res) => {
 });
 
 app.post('/location', (req, res) => {
+    if (req.body.flag) {
+        return handleFlaggedRequest(req, res);
+    }
     if (!req.body.location || !req.body.location.longitude || !req.body.location.latitude) {
         return res.status(400).json({
             code: 400,
@@ -83,9 +86,6 @@ app.post('/location', (req, res) => {
             code: 400,
             message: 'Devices data is invalid'
         });
-    }
-    if (req.body.flag) {
-        return handleFlaggedRequest(req, res);
     }
     const baseLocationTimestamp = {
         timestamp: Date.now(),
