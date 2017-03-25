@@ -13,12 +13,12 @@
 
 <ion-content class="trackee-add">
     <div class="header">
-        <button ion-button color="light"> Scan Your Beacon </button>
+        <button ion-button color="light" (click)="scanBLE()"> Scan Your Beacon </button>
     </div>
     <ion-list>
         <ion-item>
             <ion-label color="primary" stacked>ID</ion-label>
-            <ion-input disabled placeholder="Beacon ID"></ion-input>
+            <ion-input [(ngModel)]="id" disabled placeholder="Beacon ID"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Name</ion-label>
@@ -36,7 +36,7 @@
         </ion-item>
         <ion-item>
             <ion-label>Notify me when not near me</ion-label>
-            <ion-select [(ngModel)]="notificationSetting">
+            <ion-select [(ngModel)]="nearMeNotifSetting">
                 <ion-option value="0">Disabled</ion-option>
                 <ion-option value="50">> 50 Meter</ion-option>
                 <ion-option value="100">> 100 Meter</ion-option>

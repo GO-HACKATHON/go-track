@@ -1,5 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { BLE } from '@ionic-native/ble';
+import { Trackees } from '../../providers/providers';
+import { AlertController } from 'ionic-angular';
 
 declare var google;
 
@@ -7,10 +10,14 @@ declare var google;
   templateUrl: 'trackee-add.html',
 })
 export class TrackeeAddPage {
-
+  id: string;
+  name: string;
+  type: string;
+  nearMeNotifSetting: string;
   showMap: Boolean = true;
+  firstIdHit: Boolean = false;
   @ViewChild('map') map;
-  constructor(private nav: NavController) {}
+  constructor(private nav: NavController, private ble: BLE, private trackees: Trackees, public alert: AlertController) {}
 
   initJSMaps(mapEle) {
     let map = new google.maps.Map(mapEle, {
@@ -57,7 +64,51 @@ export class TrackeeAddPage {
     this.initJSMaps(mapEle);
   }
 
+  scanBLE() {
+    this.firstIdHit = true;
+    const onDeviceFound = (device) => {
+      if (this.firstIdHit) {
+        this.id = device.id
+      }
+    }
+    const onError = (err) => {
+      console.log('Error while scanning:', err);
+    }
+    this.ble.startScan([]).subscribe(onDeviceFound, onError);
+  }
+
   saveTrackee() {
-	  this.nav.pop();
+    const payload = {
+      boundingBoxNotifSetting: {
+        enabled: false,
+        // enabled: true,
+        // northeast: {
+        //   latitude: -6.240446,
+        //   longitude: 106.790652
+        // },
+        // southwest: {
+        //   latitude: -6.241364,
+        //   longitude: 106.791425
+        // }
+      },
+      category: this.type,
+      id: this.id,
+      name: this.name,
+      nearMeNotifSetting: parseInt(this.nearMeNotifSetting || "0")
+    };
+    this.trackees.existById(this.id, (res) => {
+      if (res) {
+        let alert = this.alert.create({
+          title: 'Already registered!',
+          subTitle: 'Your scanned device already registered!',
+          buttons: ['OK']
+        });
+        alert.present();
+      } else {
+        this.trackees.store(payload, () => {
+           this.nav.pop();
+        });
+      }
+    });
   }
 }

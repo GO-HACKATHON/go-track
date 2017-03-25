@@ -9,6 +9,7 @@ import { TrackeeListPage } from '../trackee-list/trackee-list';
 import { TrackeeDetailPage } from '../trackee-detail/trackee-detail';
 import { SettingsPage } from '../settings/settings';
 import { Trackees } from '../../providers/providers';
+import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
 
@@ -157,9 +158,15 @@ export class MapPage {
   circleList: any;
   overlayList: any;
   gmap: any;
+  mypos: any;
   @ViewChild('map') map;
 
-  constructor(public nav: NavController, public platform: Platform, public popoverCtrl: PopoverController, private trackees: Trackees) {}
+  constructor(
+    public nav: NavController, 
+    public platform: Platform,
+    public popoverCtrl: PopoverController,
+    private trackees: Trackees, 
+    private geolocation: Geolocation) { }
 
   presentPopover(myEvent) {
     let popover = this.popoverCtrl.create(PopoverPage);
@@ -199,7 +206,6 @@ export class MapPage {
             radius: loc.accuracy
           });
           
-
           var customTxt = `
             <div style="transform:translateX(-50%);">
               <div style="width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 7px solid #26c6da; margin-left: auto; margin-right: auto"></div> 
@@ -243,6 +249,26 @@ export class MapPage {
     }
 
     this.initJSMaps(mapEle);
+  }
+
+  setCenterToMe() {
+    this.geolocation.getCurrentPosition().then((response) => {
+        const pos = {
+          lat: response.coords.latitude,
+          lng: response.coords.longitude
+        };
+
+        this.gmap.setCenter(pos);
+        if (!this.mypos) {
+          this.mypos = new google.maps.Marker({
+            position: pos,
+            icon: 'assets/img/my-location-icon.png',
+            map: this.gmap
+          });
+        } else {
+          this.mypos.setPosition(pos);
+        }
+    });
   }
 
   selectAll() {

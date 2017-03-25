@@ -15,27 +15,22 @@
     <ion-searchbar class="search"></ion-searchbar>
     <ion-list>
         <ion-list-header>Recently Tracked</ion-list-header>
-        <ion-item *ngFor="let tl of trackeeAndLocationList" (click)="goToDetail(tl)">
+        <ion-item *ngFor="let tl of trackeeAndLocationListToday" (click)="goToDetail(tl)">
             <h2>{{tl.trackee.name}}</h2>
             <p>{{tl.trackee.category[0].toUpperCase() + tl.trackee.category.slice(1)}}</p>
             <ion-note item-right>< 10 M</ion-note>
         </ion-item>
         <ion-list-header>Tracked within a week</ion-list-header>
-        <ion-item (click)="goToDetail()">
-            <h2>PS4 Baru</h2>
-            <p>Lainnya</p>
-            <ion-note item-right>< 218 M</ion-note>
-        </ion-item>
-        <ion-item (click)="goToDetail()">
-            <h2>Motor</h2>
-            <p>Personal</p>
-            <ion-note item-right> 894 M</ion-note>
+        <ion-item *ngFor="let tl of trackeeAndLocationListThisWeek" (click)="goToDetail(tl)">
+            <h2>{{tl.trackee.name}}</h2>
+            <p>{{tl.trackee.category[0].toUpperCase() + tl.trackee.category.slice(1)}}</p>
+            <ion-note item-right>< 10 M</ion-note>
         </ion-item>
         <ion-list-header>More than a week</ion-list-header>
-        <ion-item (click)="goToDetail()">
-            <h2>Mobil</h2>
-            <p>Personal</p>
-            <ion-note item-right> 3.6 KM</ion-note>
+        <ion-item *ngFor="let tl of trackeeAndLocationList" (click)="goToDetail(tl)">
+            <h2>{{tl.trackee.name}}</h2>
+            <p>{{tl.trackee.category[0].toUpperCase() + tl.trackee.category.slice(1)}}</p>
+            <ion-note item-right>< 10 M</ion-note>
         </ion-item>
     </ion-list>
 </ion-content>
