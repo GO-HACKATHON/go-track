@@ -28,27 +28,27 @@
 
 	<ion-toolbar no-border class="vertical-align-middle map-menu scrollable-segments">
 		<ion-segment>
-				<ion-segment-button style="border:0px" value="all">
+				<ion-segment-button style="border:0px" value="all" (ionSelect)="selectAll()">
 					<ion-icon style="vertical-align:middle" class="icon-block" name="globe"></ion-icon>
 					<span style="vertical-align:middle; padding-left:5px" > All </span>
 				</ion-segment-button>
-				<ion-segment-button style="border:0px" value="personal">
+				<ion-segment-button style="border:0px" value="personal" (ionSelect)="selectCategory('personal')">
 					<ion-icon style="vertical-align:middle" class="icon-block" name="key"></ion-icon>
 					<span style="vertical-align:middle; padding-left:5px" > Personal </span>
 				</ion-segment-button>
-				<ion-segment-button style="border:0px" value="vechile">
+				<ion-segment-button style="border:0px" value="vehicle" (ionSelect)="selectCategory('vehicle')">
 					<ion-icon style="vertical-align:middle" class="icon-block" name="car"></ion-icon>
 					<span style="vertical-align:middle; padding-left:5px" > Vechile </span>
 				</ion-segment-button>
-				<ion-segment-button style="border:0px" value="pet">
+				<ion-segment-button style="border:0px" value="pet" (ionSelect)="selectCategory('pet')">
 					<ion-icon style="vertical-align:middle" class="icon-block" name="paw"></ion-icon>
 					<span style="vertical-align:middle; padding-left:5px" > Pet </span>
 				</ion-segment-button>
-				<ion-segment-button style="border:0px" value="family">
+				<ion-segment-button style="border:0px" value="family" (ionSelect)="selectCategory('family')">
 					<ion-icon style="vertical-align:middle" class="icon-block" name="people"></ion-icon>
 					<span style="vertical-align:middle; padding-left:5px" > Family </span>
 				</ion-segment-button>
-				<ion-segment-button style="border:0px" value="other">
+				<ion-segment-button style="border:0px" value="other" (ionSelect)="selectCategory('other')">
 					<ion-icon style="vertical-align:middle" class="icon-block" name="briefcase"></ion-icon>
 					<span style="vertical-align:middle; padding-left:5px" > Other </span>
 				</ion-segment-button>

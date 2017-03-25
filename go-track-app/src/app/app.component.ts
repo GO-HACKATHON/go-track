@@ -110,7 +110,7 @@ export class MyApp {
     }
 
     console.log('start scanning ...');
-    this.ble.startScan([]).subscribe(onDeviceFound, onError);
+    // this.ble && this.ble.startScan([]).subscribe(onDeviceFound, onError);
   }
 
   convertRSSIToDistance(rssi) {
@@ -123,7 +123,7 @@ export class MyApp {
     this.scanBLE();
 
     setTimeout(() => {
-      self.ble.stopScan();
+      // self.ble && self.ble.stopScan();
       if (self.devices.length) {
         self.geolocation.getCurrentPosition().then((response) => {
           console.log('Location:', response);
