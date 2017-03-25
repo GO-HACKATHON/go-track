@@ -24,8 +24,9 @@ export class Trackees {
   getLocationById(id, callback) {
     this.http.get(`${this.baseUrl}/locationById/${id}`)
       .subscribe((resp) => {
-        callback(resp.json());
+        callback(resp.json(), null);
       }, (err) => {
+        callback(null, err);
         console.log("error");
       });
   }
