@@ -63,4 +63,25 @@ $ nodemon server.js
 
 ## Endpoints
 
-TODO
+### Send Location Updates
+
+```json
+POST /update
+
+{
+  "location": {
+    "latitude": -6.9190999,
+    "longitude": 107.5974217,
+    "accuracy": 25
+  },
+  "devices": [{
+    "id": "device_id_1",
+    "distance": 1.4
+  }, {
+  	"id": "device_id_2",
+  	"distance": 3.8
+  }]
+}
+```
+
+Distance and accuracy are in meters.

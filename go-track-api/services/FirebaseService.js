@@ -22,6 +22,29 @@ class FirebaseService {
         });
     }
 
+    set(key, value) {
+        logger.info(`Setting values for key ${key}: ${JSON.stringify(value)}`);
+        return new Promise((resolve, reject) => {
+            this.db.ref(key).set(value)
+                .then(resolve)
+                .catch((err) => {
+                    logger.error(`Error while setting value for key ${key}`, err);
+                    return reject(err);
+                })
+        });
+    }
+
+    push(key, value) {
+        logger.info(`Pushing values for key ${key}: ${JSON.stringify(value)}`);
+        const id = this.db.ref(key).push().key;
+        return this.set(`${key}/${id}`, value);
+    }
+
+    storeRaw(deviceId, locationTimestamp) {
+        logger.info(`Storing raw data for deviceId ${deviceId}:`, locationTimestamp);
+        return this.push(`raw/${deviceId}`, locationTimestamp);
+    }
+
 }
 
 module.exports = FirebaseService;
