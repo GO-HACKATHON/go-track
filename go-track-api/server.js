@@ -139,7 +139,14 @@ app.get('/trackeeById/:trackeeId', (req, res) => {
     const trackeeId = req.params.trackeeId;
     firebaseService.getTrackeeById(trackeeId)
         .then((trackee) => {
-            res.status(200).json(trackee);
+            if (!trackee) {
+                res.status(404).json({
+                    code: 404,
+                    message: `No trackee found with id ${trackeeId}`
+                });
+            } else {
+                res.status(200).json(trackee);
+            }
         })
         .catch((err) => {
             res.status(500).json({
