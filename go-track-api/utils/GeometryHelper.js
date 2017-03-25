@@ -118,9 +118,16 @@ const circumcircle = (p, q, r) => {
 
 const dilaterationCartesian = (c1, c2) => {
     const p = midpointOfIntersection(c1, c2);
-    const d = Math.abs(c1.r + c2.r - c1.center.distance(c2.center)) / 2;
-    console.log(`r1 = ${c1.r}, r2 = ${c2.r} => d = ${d}`);
-    return new Circle(p, d);
+    const d = c1.center.distance(c2.center);
+    let r = Math.abs(c1.r + c2.r - d) / 2;
+    if (c1.r + d < c2.r) {
+        r = c1.r;
+    }
+    if (c2.r + d < c1.r) {
+        r = c2.r;
+    }
+    console.log(`r1 = ${c1.r}, r2 = ${c2.r}, d = ${d} => r = ${r}`);
+    return new Circle(p, r);
 };
 
 const multilaterationCartesian = (circles) => {
