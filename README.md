@@ -11,6 +11,12 @@ This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Serv
 
 ## Introduction
 
+### Screenshot / Demo
+
+![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
+![2017-03-26 02_57_02](https://cloud.githubusercontent.com/assets/5804679/24325653/ed9d231e-11cf-11e7-8b8b-ba62ff2e4f4d.gif)
+
+
 ### The Background
 Tracking is **useful**. There are lots of values from knowing where everything is and where everything moves to. However, **tracking items with GPS trackers is practically hard for several reasons**. Firstly, the devices themselves are very complicated as they consist of GPS receivers packed with GPRS modules, making them cost so high, eat so much space, and consume a lot of powers. In addition, monthly data subscription is also required for each tracking device in order to send us location updates, adding extra pain to the list. 
 
