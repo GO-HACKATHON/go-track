@@ -190,5 +190,3 @@ Response:
 ```
 
 This will return 404 if no trackee with such id found.
-
-
