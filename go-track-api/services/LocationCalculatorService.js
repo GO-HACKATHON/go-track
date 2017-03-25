@@ -19,7 +19,7 @@ class LocationCalculatorService {
             if (!id) return;
 
             // retrieve last 3 known locations
-            self.firebaseService.getLastRawLocations(id, 3)
+            self.firebaseService.getLastRawLocations(id, 20)
                 .then((locations) => {
                     if (locations.length === 0) {
                         logger.error('error 1');
@@ -28,7 +28,7 @@ class LocationCalculatorService {
                     if (locationTimestamp.timestamp !== locations[0].timestamp) {
                         locations.push(locationTimestamp);
                     }
-                    if (locations.length < 3) {
+                    if (locations.length < 20) {
                         logger.error('error 2');
                         return storeDerived(locationTimestamp);
                     }
