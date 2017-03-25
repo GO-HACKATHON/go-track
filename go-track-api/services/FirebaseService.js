@@ -55,6 +55,22 @@ class FirebaseService {
                 return sorted.slice(0, size);
             });
     }
+
+    updateTrackee(trackee) {
+        logger.info(`Updating trackee info ${JSON.stringify(trackee)}`);
+        const id = trackee.id;
+        return this.set(`trackee/${id}`, trackee);
+    }
+
+    getTrackee() {
+        logger.info('Getting trackees');
+        return this.get(`trackee`).then((values) => _.toArray(values));
+    }
+
+    getTrackeeById(trackeeId) {
+        logger.info(`Getting trackee by id ${trackeeId}`);
+        return this.get(`trackee/${trackeeId}`);
+    }
 }
 
 module.exports = FirebaseService;

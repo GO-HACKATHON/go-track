@@ -108,3 +108,85 @@ Response:
   }]
 }
 ```
+
+### Store/Update Trackee
+
+```json
+POST /trackee
+
+{
+  "id": "...", 
+  "name": "...",
+  "category": "...",
+  "nearMeNotifSetting": [disabled/50/100/500/1000]
+  "boundingBoxNotifSetting": {
+    "enabled": [true/false]
+    "northeast": {
+      "latitude": -6.9190999,
+      "longitude": 107.5974217,
+    },
+    southwest: {
+      "latitude": -6.9190999,
+      "longitude": 107.5974217,
+    }
+  }
+}
+```
+
+### Get Trackees List
+
+```
+GET /trackee
+```
+
+Response:
+
+```json
+[{
+  "id": "...", 
+  "name": "...",
+  "category": "...",
+  "nearMeNotifSetting": [disabled/50/100/500/1000]
+  "boundingBoxNotifSetting": {
+    "enabled": [true/false]
+    "northeast": {
+      "latitude": -6.9190999,
+      "longitude": 107.5974217,
+    },
+    southwest: {
+      "latitude": -6.9190999,
+      "longitude": 107.5974217,
+    }
+  }
+}, ...]
+```
+
+### Get Trackee By Id
+
+```
+GET /trackeeById/:trackeeId
+```
+
+Response:
+
+```json
+{
+  "id": "...", 
+  "name": "...",
+  "category": "...",
+  "nearMeNotifSetting": [disabled/50/100/500/1000]
+  "boundingBoxNotifSetting": {
+    "enabled": [true/false]
+    "northeast": {
+      "latitude": -6.9190999,
+      "longitude": 107.5974217,
+    },
+    southwest: {
+      "latitude": -6.9190999,
+      "longitude": 107.5974217,
+    }
+  }
+}
+```
+
+This will return 404 if no trackee with such id found.

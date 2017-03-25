@@ -108,6 +108,47 @@ app.get('/getLocation/:deviceId', (req, res) => {
         });
 });
 
+app.post('/trackee', (req, res) => {
+    const trackee = req.body;
+    firebaseService.updateTrackee(trackee)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch((err) => {
+            res.status(500).json({
+                code: 500,
+                message: `Error while updating trackee: ${err.message}`
+            });
+        });
+});
+
+app.get('/trackee', (req, res) => {
+    firebaseService.getTrackee()
+        .then((trackees) => {
+            res.status(200).json(trackees);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                code: 500,
+                message: `Error while getting trackee: ${err.message}`
+            });
+        });
+});
+
+app.get('/trackeeById/:trackeeId', (req, res) => {
+    const trackeeId = req.params.trackeeId;
+    firebaseService.getTrackeeById(trackeeId)
+        .then((trackee) => {
+            res.status(200).json(trackee);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                code: 500,
+                message: `Error while getting trackee: ${err.message}`
+            });
+        });
+});
+
 // Unhandled 500
 app.use((error, req, res, next) => {
     logger.error('Uncaught error: ', error);
