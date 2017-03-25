@@ -14,6 +14,7 @@ This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Serv
 ### Screenshot / Demo
 
 ![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
+![2017-03-26 02_57_02](https://cloud.githubusercontent.com/assets/5804679/24325653/ed9d231e-11cf-11e7-8b8b-ba62ff2e4f4d.gif)
 
 
 ### The Background
