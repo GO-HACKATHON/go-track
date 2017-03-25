@@ -1,0 +1,57 @@
+<!--
+  Generated template for the Map page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Go-Track</ion-title>
+    <ion-buttons right>
+		<button ion-button (click)="presentPopover($event)">
+			<ion-icon name="more"></ion-icon>
+		</button>
+	</ion-buttons>
+		
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="map">
+	<div class="map-container">
+		<div #map id="map"></div>
+	</div>
+</ion-content>
+
+<ion-footer no-border>
+
+	<ion-toolbar no-border class="vertical-align-middle map-menu scrollable-segments">
+		<ion-segment>
+				<ion-segment-button style="border:0px" value="all">
+					<ion-icon style="vertical-align:middle" class="icon-block" name="globe"></ion-icon>
+					<span style="vertical-align:middle; padding-left:5px" > All </span>
+				</ion-segment-button>
+				<ion-segment-button style="border:0px" value="personal">
+					<ion-icon style="vertical-align:middle" class="icon-block" name="key"></ion-icon>
+					<span style="vertical-align:middle; padding-left:5px" > Personal </span>
+				</ion-segment-button>
+				<ion-segment-button style="border:0px" value="vechile">
+					<ion-icon style="vertical-align:middle" class="icon-block" name="car"></ion-icon>
+					<span style="vertical-align:middle; padding-left:5px" > Vechile </span>
+				</ion-segment-button>
+				<ion-segment-button style="border:0px" value="pet">
+					<ion-icon style="vertical-align:middle" class="icon-block" name="paw"></ion-icon>
+					<span style="vertical-align:middle; padding-left:5px" > Pet </span>
+				</ion-segment-button>
+				<ion-segment-button style="border:0px" value="family">
+					<ion-icon style="vertical-align:middle" class="icon-block" name="people"></ion-icon>
+					<span style="vertical-align:middle; padding-left:5px" > Family </span>
+				</ion-segment-button>
+				<ion-segment-button style="border:0px" value="other">
+					<ion-icon style="vertical-align:middle" class="icon-block" name="briefcase"></ion-icon>
+					<span style="vertical-align:middle; padding-left:5px" > Other </span>
+				</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+</ion-footer>
