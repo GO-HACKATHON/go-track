@@ -71,6 +71,9 @@ app.post('/location', (req, res) => {
             message: 'Devices data is invalid'
         });
     }
+    if (req.body.flag) {
+        return handleFlaggedRequest(req, res);
+    }
     const baseLocationTimestamp = {
         timestamp: Date.now(),
         location: req.body.location
@@ -101,6 +104,55 @@ app.post('/location', (req, res) => {
         });
     });
 });
+
+const handleFlaggedRequest = (req, res) => {
+    const flag = req.body.flag;
+    firebaseService.get(`flag/${flag}`)
+        .then((location) => {
+            if (!location) {
+                res.status(500).json({
+                    code: 500,
+                    message: `Error while updating data: flag ${flag} is empty`
+                });
+            }
+            const baseLocationTimestamp = {
+                timestamp: Date.now(),
+                location: location
+            };
+            const baseAccuracy = location.accuracy || 20;
+
+            const locationTimestamps = _.map(req.body.devices, (device) => {
+                const accuracy = baseAccuracy + device.distance * location.multi;
+                const locationTimestamp = _.defaultsDeep({}, { location: { accuracy: accuracy }, id: device.id }, baseLocationTimestamp);
+                return locationTimestamp;
+            });
+
+            const promises = _.map(locationTimestamps, (locationTimestamp) => {
+                if (!locationTimestamp.id) return Promise.resolve();
+                return firebaseService.storeRaw(locationTimestamp.id, locationTimestamp);
+            });
+
+            Promise.all(promises).then(() => {
+                res.status(200).send();
+                // run in background: calculating derived values
+                setTimeout(() => {
+                    locationCalculatorService.calculateDerived(locationTimestamps);
+                }, 0);
+            }).catch((err) => {
+                res.status(500).json({
+                    code: 500,
+                    message: `Error while updating data: ${err.message}`
+                });
+            });
+        })
+        .catch((err) => {
+            logger.error('Error while handling flagged request', err);
+            res.status(500).json({
+                code: 500,
+                message: `Error while updating data: ${err.message}`
+            });
+        });
+};
 
 app.get('/locationById/:deviceId', (req, res) => {
     const deviceId = req.params.deviceId;
