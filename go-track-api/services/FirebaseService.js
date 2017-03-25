@@ -46,8 +46,23 @@ class FirebaseService {
         return this.push(`raw/${deviceId}`, locationTimestamp);
     }
 
+    storeDerived(deviceId, locationTimestamp) {
+        logger.info(`Storing derived data for deviceId ${deviceId}:`, locationTimestamp);
+        return this.push(`derived/${deviceId}`, locationTimestamp);
+    }
+
     getLastLocations(deviceId, n) {
         logger.info(`Getting ${n} last known location for deviceId ${deviceId}`);
+        return this.get(`derived/${deviceId}`)
+            .then((values) => {
+                const sorted = _.orderBy(values, ['timestamp'], ['desc']);
+                const size = Math.min(n, sorted.length);
+                return sorted.slice(0, size);
+            });
+    }
+
+    getLastRawLocations(deviceId, n) {
+        logger.info(`Getting ${n} last known raw location for deviceId ${deviceId}`);
         return this.get(`raw/${deviceId}`)
             .then((values) => {
                 const sorted = _.orderBy(values, ['timestamp'], ['desc']);

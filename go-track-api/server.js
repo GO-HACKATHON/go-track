@@ -7,12 +7,14 @@ const config = require('./config');
 const logger = require('./logger');
 const admin = require('firebase-admin');
 const FirebaseService = require('./services/FirebaseService');
+const LocationCalculatorService = require('./services/LocationCalculatorService');
 
 admin.initializeApp({
     credential: admin.credential.cert(require('./secrets/firebase.json')),
     databaseURL: config.firebase.databaseUrl
 });
 const firebaseService = new FirebaseService();
+const locationCalculatorService = new LocationCalculatorService(firebaseService);
 
 const app = express();
 
@@ -75,15 +77,23 @@ app.post('/location', (req, res) => {
     };
     const baseAccuracy = req.body.location.accuracy || 20;
 
-    const promises = _.map(req.body.devices, (device) => {
-        if (!device.id) return Promise.resolve();
+    const locationTimestamps = _.map(req.body.devices, (device) => {
         const accuracy = baseAccuracy + device.distance;
-        const locationTimestamp = _.defaultsDeep({}, { location: { accuracy: accuracy } }, baseLocationTimestamp);
-        return firebaseService.storeRaw(device.id, locationTimestamp);
+        const locationTimestamp = _.defaultsDeep({}, { location: { accuracy: accuracy }, id: device.id }, baseLocationTimestamp);
+        return locationTimestamp;
+    });
+
+    const promises = _.map(locationTimestamps, (locationTimestamp) => {
+        if (!locationTimestamp.id) return Promise.resolve();
+        return firebaseService.storeRaw(locationTimestamp.id, locationTimestamp);
     });
 
     Promise.all(promises).then(() => {
         res.status(200).send();
+        // run in background: calculating derived values
+        setTimeout(() => {
+            locationCalculatorService.calculateDerived(locationTimestamps);
+        }, 0);
     }).catch((err) => {
         res.status(500).json({
             code: 500,
