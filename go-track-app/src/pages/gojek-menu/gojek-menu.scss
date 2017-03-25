@@ -1,0 +1,16 @@
+.gojek-menu {
+    .menu-container {
+        // height: 700px;
+        // width: 100%;
+        // background: url(../assets/img/gojek-main.jpg) no-repeat;
+        // background-size: cover;
+        position: relative;
+    }
+    .gotrack-button {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        height: 110px;
+        width: calc(100%/4);
+    }
+}
