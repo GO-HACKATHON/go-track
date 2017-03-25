@@ -58,6 +58,19 @@ app.get('/firebase_test/:key', (req, res) => {
         });
 });
 
+app.post('/firebase_test/:key', (req, res) => {
+    firebaseService.set(req.params.key, req.body)
+        .then((value) => {
+            res.status(200).json(value);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                code: 500,
+                message: err.message || 'Unknown Error'
+            });
+        });
+});
+
 app.post('/location', (req, res) => {
     if (!req.body.location || !req.body.location.longitude || !req.body.location.latitude) {
         return res.status(400).json({
