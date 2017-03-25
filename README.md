@@ -1,7 +1,7 @@
+![GO-TRACK](https://cloud.githubusercontent.com/assets/7076809/24319534/6ebf845c-1151-11e7-81a4-051efbdc0068.png)
+
 # GO-TRACK
 This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Service**.
-
-![gotrack2](https://cloud.githubusercontent.com/assets/7076809/24319534/6ebf845c-1151-11e7-81a4-051efbdc0068.png)
 
 ## Content
 1. [Introduction](#introduction)
