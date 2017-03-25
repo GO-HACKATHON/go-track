@@ -7,7 +7,7 @@ import { Api } from './api';
 @Injectable()
 export class Trackees {
 
-  baseUrl: string = "https://go-track-api.herokuapp.com"; 
+  baseUrl: string = "http://gotrack.susan.to"; 
 
   constructor(private http: Http) {
   }
@@ -30,14 +30,22 @@ export class Trackees {
       });
   }
 
-  getByID(id: number) {
-    // return this.api.get(`${this.baseUrl}/trackeeById/${id}`)
-    //   .map(resp => resp.json());
+  existById(id: string, callback) {
+    this.http.get(`${this.baseUrl}/trackeeById/${id}`)
+      .subscribe((resp) => {
+        callback(true);
+      }, (err) => {
+        callback(false);
+      });
   }
 
-  store(data: any) {
-    // return this.api.post(`${this.baseUrl}/trackee`, data)
-    //   .map(resp => resp.json());
+  store(data, callback) {
+    this.http.post(`${this.baseUrl}/trackee`, data)
+      .subscribe((resp) => {
+        callback(resp.json());
+      }, (err) => {
+        console.log("error");
+      });
   }
 
 }

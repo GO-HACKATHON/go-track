@@ -171,7 +171,7 @@ export class MyApp {
         devices: this.devices
       };
       console.log('sending updates ...', obj);
-      this.http.post('https://go-track-api.herokuapp.com/update', obj)
+      this.http.post('http://gotrack.susan.to/update', obj)
         .subscribe(() => {
           console.log('sending updates success');
         }, (err) => {
