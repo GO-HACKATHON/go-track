@@ -16,3 +16,6 @@ Tracking is **useful**. There are lots of values from knowing where everything i
 **Recent tracking technology**, powered with *Bluetooth Low Energy* comes to solve the caveat. They have begun to gain reputation since they would allow super convinient tracking at a much lower costs. The unit costs about $10 when purchased individually and as low as $1 when purchased in mass scale. They do not need any of internet or GPS, making it very simple, take very little space, and last for years without replacing or recharging the battery, thus they could be applied to almost any application, from belongings tracking, children or elderly tracking or as simple as pet tracking.
 
 However, the technology relies on a system called **"Crowd GPS"**. The technology uses a companion app (also used by users to track their devices) to update detected *Tracker*. **This means availability is not guaranteed: no tracking could be performed without active users activating their bluetooth (and apps)**. To give illustration, the following is active TrackR user recorded **in a month** in Jakarta.
+
+![trackrmap](https://cloud.githubusercontent.com/assets/7076809/24319670/113f0c86-1155-11e7-875b-337cfd1ed9f0.png)
+
