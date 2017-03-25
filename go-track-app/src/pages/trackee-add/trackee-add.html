@@ -1,0 +1,57 @@
+<ion-header>
+	<ion-toolbar danger>
+        <ion-buttons left>
+            <button ion-button navPop left>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+		<ion-title>
+			Add Trackee
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="trackee-add">
+    <div class="header">
+        <button ion-button color="light"> Scan Your Beacon </button>
+    </div>
+    <ion-list>
+        <ion-item>
+            <ion-label color="primary" stacked>ID</ion-label>
+            <ion-input disabled placeholder="Beacon ID"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Name</ion-label>
+            <ion-input placeholder="Enter friendly name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Jenis</ion-label>
+            <ion-select [(ngModel)]="type">
+                <ion-option value="personal">Personal (Dompet, Kunci, ..)</ion-option>
+                <ion-option value="vechile">Kendaraan (Mobil, motor, ..)</ion-option>
+                <ion-option value="family">Keluarga (Anak-anak, ..)</ion-option>
+                <ion-option value="pet">Peliharaan (Kucing, Anjing, ..)</ion-option>
+                <ion-option value="other">Lainnya</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Notify me when not near me</ion-label>
+            <ion-select [(ngModel)]="notificationSetting">
+                <ion-option value="0">Disabled</ion-option>
+                <ion-option value="50">> 50 Meter</ion-option>
+                <ion-option value="100">> 100 Meter</ion-option>
+                <ion-option value="500">> 500 Meter</ion-option>
+                <ion-option value="1000">> 1 KM</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Notify me when outside of region</ion-label>
+            <ion-toggle [(ngModel)]="showMap" checked="false"></ion-toggle>
+        </ion-item>
+        
+    </ion-list>
+    <div [hidden]="!showMap" #map id="map"></div>
+    <div class="footer">
+        <button ion-button (click)= "saveTrackee()"> Save </button>
+    </div>
+</ion-content>
