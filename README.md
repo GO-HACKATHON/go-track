@@ -63,7 +63,7 @@ This repository includes four module/application :
 1. [NodeJS Backend Server](go-track-api/README.md)
 2. [Ionic IOS & Android Application](go-track-app/README.md)
 3. [GoTrack Server library for calculating position](go-track-lib/README.md)
-4. [Client helper for fast communicating with server](go-track-client-service/README.md)
+4. [Client helper for fast communicating with server](go-track-sdk/README.md)
 
 ## Demo
 ### Screen Capture
