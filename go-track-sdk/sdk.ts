@@ -31,6 +31,34 @@ export class GOTrackSDK {
       });
   }
 
+  getTrackeeById(id, callback) {
+    this.http.get(`${this.baseUrl}/trackeeById/${id}`)
+      .subscribe((resp) => {
+        callback(resp.json(), null);
+      }, (err) => {
+        callback(null, err);
+        console.log("error");
+      });
+  }
+
+  getLocationsByIds(ids, callback) {
+    this.http.post(`${this.baseUrl}/locationsByIds`, ids)
+      .subscribe((resp) => {
+        callback(resp.json());
+      }, (err) => {
+        console.log("error");
+      });
+  }
+
+  getTrackeesByIds(ids, callback) {
+    this.http.post(`${this.baseUrl}/trackeesByIds`, ids)
+      .subscribe((resp) => {
+        callback(resp.json());
+      }, (err) => {
+        console.log("error");
+      });
+  }
+
   existById(id: string, callback) {
     this.http.get(`${this.baseUrl}/trackeeById/${id}`)
       .subscribe((resp) => {
