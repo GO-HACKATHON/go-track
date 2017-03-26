@@ -2,22 +2,18 @@
 
 # GO-TRACK
 This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Service**.
+![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
+
 
 ## Content
 1. [Introduction](#introduction)
-2. How to run
-3. [API Docs](tree/master/go-track-api/README.md)
-4. [Pitch Deck](PITCHDECK.pdf)
+2. [The Proposed Solution](#the-proposed-solution)
+3. [Impact](#business-value-impact)
+4. [The Project](#the-project)
+5. [Demo](#demo)
+6. [Pitch Deck](PITCHDECK.pdf)
 
 ## Introduction
-
-### Screenshot / Demo
-
-![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
-![2017-03-26 02_57_02](https://cloud.githubusercontent.com/assets/5804679/24325653/ed9d231e-11cf-11e7-8b8b-ba62ff2e4f4d.gif)
-
-[![Algorithm & Lib Demo](https://img.youtube.com/vi/AtFQdQe8bFM/0.jpg)](https://www.youtube.com/watch?v=AtFQdQe8bFM)
-
 
 ### The Background
 Tracking is **useful**. There are lots of values from knowing where everything is and where everything moves to. However, **tracking items with GPS trackers is practically hard for several reasons**. Firstly, the devices themselves are very complicated as they consist of GPS receivers packed with GPRS modules, making them cost so high, eat so much space, and consume a lot of powers. In addition, monthly data subscription is also required for each tracking device in order to send us location updates, adding extra pain to the list. 
@@ -60,3 +56,23 @@ Having data about them without doubt useful for the people using public transpor
 3. Is there any Angkot that doesn't take the appropriate route, and many more.
 
 It could bring us the big picture of public transportation in a certain city and the government could use the data to make actions and improve the city.
+
+## The Project
+
+This repository includes four module/application : 
+1. NodeJS Backend Server
+[More detail and How to Run](go-track-api/README.md)
+[More detail and How to Run](go-track-api/README.md)
+2. Ionic IOS & Android Application
+[More detail and How to Run](go-track-app/README.md)
+3. GoTrack Server library for calculating position 
+[More detail and How to Run](go-track-lib/README.md)
+4. Client helper for fast communicating with server
+[More detail and How to Run](go-track-client-service/README.md)
+
+## Demo
+![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
+![2017-03-26 02_57_02](https://cloud.githubusercontent.com/assets/5804679/24325653/ed9d231e-11cf-11e7-8b8b-ba62ff2e4f4d.gif)
+
+[![Algorithm & Lib Demo](https://img.youtube.com/vi/AtFQdQe8bFM/0.jpg)](https://www.youtube.com/watch?v=AtFQdQe8bFM)
+
