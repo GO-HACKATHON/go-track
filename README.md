@@ -4,6 +4,13 @@
 This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Service**.
 ![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
 
+## The Project
+
+This repository includes four module/application : 
+1. [NodeJS Backend Server](go-track-api/README.md)
+2. [Ionic IOS & Android Application](go-track-app/README.md)
+3. [GoTrack Server library for calculating position](go-track-lib/README.md)
+4. [Client helper for fast communicating with server](go-track-sdk/README.md)
 
 ## Content
 1. [Introduction](#introduction)
@@ -57,18 +64,13 @@ Having data about them without doubt useful for the people using public transpor
 
 It could bring us the big picture of public transportation in a certain city and the government could use the data to make actions and improve the city.
 
-## The Project
-
-This repository includes four module/application : 
-1. [NodeJS Backend Server](go-track-api/README.md)
-2. [Ionic IOS & Android Application](go-track-app/README.md)
-3. [GoTrack Server library for calculating position](go-track-lib/README.md)
-4. [Client helper for fast communicating with server](go-track-sdk/README.md)
-
 ## Demo
 ### Screen Capture
 ![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
 ![2017-03-26 02_57_02](https://cloud.githubusercontent.com/assets/5804679/24325653/ed9d231e-11cf-11e7-8b8b-ba62ff2e4f4d.gif)
+
+![2017-03-26 10_35_37](https://cloud.githubusercontent.com/assets/5902356/24328314/411bde3c-1210-11e7-8569-4ccb007a1bc5.gif)
+
 ### Video
 [![Algorithm & Lib Demo](https://img.youtube.com/vi/AtFQdQe8bFM/0.jpg)](https://www.youtube.com/watch?v=AtFQdQe8bFM)
 

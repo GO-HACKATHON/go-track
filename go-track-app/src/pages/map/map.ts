@@ -302,7 +302,9 @@ export class MapPage {
     }
 
     this.initJSMaps(mapEle);
-    this.continuousScan();
+    if (this.flag) {
+      this.continuousScan();
+    }
   }
 
   setCenterToMe() {

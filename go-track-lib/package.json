@@ -1,0 +1,15 @@
+{
+  "name": "go-track-lib",
+  "version": "1.0.0",
+  "description": "go-track Library to calculate approximate beacons position from multiple sources",
+  "main": "lib.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sailly (Ahmad Zaky @azaky, Alif Raditya Rochman @alifradityar, Andre Susanto @andresusanto)",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "utm": "^1.1.0"
+  }
+}
