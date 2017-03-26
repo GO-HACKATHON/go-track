@@ -21,6 +21,9 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { BLE } from '@ionic-native/ble';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
+
 import { Http } from '@angular/http';
 
 @Component({
@@ -71,6 +74,7 @@ export class MyApp {
       config: Config,
       private ble: BLE,
       private geolocation: Geolocation,
+      private localNotifications: LocalNotifications,
       private http: Http) {
     // Set the default language for translation strings, and the current language.
     translate.setDefaultLang('en');

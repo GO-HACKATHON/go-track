@@ -68,7 +68,8 @@ export class TrackeeAddPage {
     this.firstIdHit = true;
     const onDeviceFound = (device) => {
       if (this.firstIdHit) {
-        this.id = device.id
+        this.id = device.id;
+        this.firstIdHit = false;
       }
     }
     const onError = (err) => {
