@@ -120,12 +120,12 @@ POST /trackee
   "category": "...",
   "nearMeNotifSetting": 100,
   "boundingBoxNotifSetting": {
-    "enabled": true
+    "enabled": true,
     "northeast": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     },
-    southwest: {
+    "southwest": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     }
@@ -153,12 +153,12 @@ Response:
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     },
-    southwest: {
+    "southwest": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     }
   }
-}, ...]
+}]
 ```
 
 ### Get Trackee By Id
@@ -181,7 +181,7 @@ Response:
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     },
-    southwest: {
+    "southwest": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     }
