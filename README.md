@@ -10,7 +10,7 @@ This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Serv
 2. [The Proposed Solution](#the-proposed-solution)
 3. [Impact](#business-value-impact)
 4. [The Project](#the-project)
-5. [Demo](#demo)
+5. [Demo With Video](#demo)
 6. [Pitch Deck](PITCHDECK.pdf)
 
 ## Introduction
@@ -60,27 +60,15 @@ It could bring us the big picture of public transportation in a certain city and
 ## The Project
 
 This repository includes four module/application : 
-1. NodeJS Backend Server
-
-[More detail and How to Run](go-track-api/README.md)
-
-[APIDocs](go-track-api/README.md)
-
-2. Ionic IOS & Android Application
-
-[More detail and How to Run](go-track-app/README.md)
-
-3. GoTrack Server library for calculating position 
-
-[More detail and How to Run](go-track-lib/README.md)
-
-4. Client helper for fast communicating with server
-
-[More detail and How to Run](go-track-client-service/README.md)
+1. [NodeJS Backend Server](go-track-api/README.md)
+2. [Ionic IOS & Android Application](go-track-app/README.md)
+3. [GoTrack Server library for calculating position](go-track-lib/README.md)
+4. [Client helper for fast communicating with server](go-track-client-service/README.md)
 
 ## Demo
+### Screen Capture
 ![2017-03-26 02_40_07](https://cloud.githubusercontent.com/assets/5804679/24325566/fce5901a-11cd-11e7-9cde-aaa7df9fda10.gif)
 ![2017-03-26 02_57_02](https://cloud.githubusercontent.com/assets/5804679/24325653/ed9d231e-11cf-11e7-8b8b-ba62ff2e4f4d.gif)
-
+### Video
 [![Algorithm & Lib Demo](https://img.youtube.com/vi/AtFQdQe8bFM/0.jpg)](https://www.youtube.com/watch?v=AtFQdQe8bFM)
 
