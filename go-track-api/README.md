@@ -118,14 +118,14 @@ POST /trackee
   "id": "...", 
   "name": "...",
   "category": "...",
-  "nearMeNotifSetting": [disabled/50/100/500/1000]
+  "nearMeNotifSetting": 100,
   "boundingBoxNotifSetting": {
-    "enabled": [true/false]
+    "enabled": true,
     "northeast": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     },
-    southwest: {
+    "southwest": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     }
@@ -146,19 +146,19 @@ Response:
   "id": "...", 
   "name": "...",
   "category": "...",
-  "nearMeNotifSetting": [disabled/50/100/500/1000]
+  "nearMeNotifSetting": 100,
   "boundingBoxNotifSetting": {
-    "enabled": [true/false]
+    "enabled": true,
     "northeast": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     },
-    southwest: {
+    "southwest": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     }
   }
-}, ...]
+}]
 ```
 
 ### Get Trackee By Id
@@ -174,14 +174,14 @@ Response:
   "id": "...", 
   "name": "...",
   "category": "...",
-  "nearMeNotifSetting": [disabled/50/100/500/1000]
+  "nearMeNotifSetting": 100,
   "boundingBoxNotifSetting": {
-    "enabled": [true/false]
+    "enabled": true,
     "northeast": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     },
-    southwest: {
+    "southwest": {
       "latitude": -6.9190999,
       "longitude": 107.5974217,
     }
