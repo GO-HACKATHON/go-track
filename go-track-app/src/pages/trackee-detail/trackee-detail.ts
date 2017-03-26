@@ -124,7 +124,6 @@ export class TrackeeDetailPage {
   constructor(public nav: NavController, private navParams: NavParams, public platform: Platform, public alert: AlertController) {
     this.trackee = navParams.get('trackee'); 
     this.location = navParams.get('location');
-    console.log(this.trackee);
   }
 
   initJSMaps(mapEle) {
@@ -182,7 +181,9 @@ export class TrackeeDetailPage {
   }
 
   goToNotificationHistory() {
-    this.nav.push(NotificationHistoryPage);
+    this.nav.push(NotificationHistoryPage, {
+      trackee: this.trackee
+    });
   }
 
   handleDelete() {
