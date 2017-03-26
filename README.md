@@ -61,13 +61,21 @@ It could bring us the big picture of public transportation in a certain city and
 
 This repository includes four module/application : 
 1. NodeJS Backend Server
+
 [More detail and How to Run](go-track-api/README.md)
-[More detail and How to Run](go-track-api/README.md)
+
+[APIDocs](go-track-api/README.md)
+
 2. Ionic IOS & Android Application
+
 [More detail and How to Run](go-track-app/README.md)
+
 3. GoTrack Server library for calculating position 
+
 [More detail and How to Run](go-track-lib/README.md)
+
 4. Client helper for fast communicating with server
+
 [More detail and How to Run](go-track-client-service/README.md)
 
 ## Demo
