@@ -11,7 +11,7 @@ This is the centralized mono repository of **GO-TRACK: GO-JEK Tracking as a Serv
 3. [Impact](#business-value-impact)
 4. [The Project](#the-project)
 5. [Demo With Video](#demo)
-6. [Pitch Deck](PITCHDECK.pdf)
+6. [Pitch Deck - Onedrive](https://1drv.ms/p/s!AhBpluK7tTlqknFEXvIwN4iegPCS)
 
 ## Introduction
 
