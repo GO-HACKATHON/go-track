@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, Config } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Settings } from '../providers/providers';
+import { Settings, Bluetooth } from '../providers/providers';
 
 import { FirstRunPage } from '../pages/pages';
 import { LoginPage } from '../pages/login/login';
@@ -71,7 +71,8 @@ export class MyApp {
       config: Config,
       private ble: BLE,
       private geolocation: Geolocation,
-      private http: Http) {
+      private http: Http,
+      private bluetooth: Bluetooth) {
     // Set the default language for translation strings, and the current language.
     translate.setDefaultLang('en');
     translate.use('en');
@@ -85,8 +86,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
-
-      this.continuousScan();
     });
   }
 
@@ -94,89 +93,5 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
-  }
-
-  scanBLE() {
-    const self = this;
-    const onDeviceFound = (device) => {
-      console.log('Device found:', device);
-      self.devices.push({
-        id: device.id,
-        distance: self.convertRSSIToDistance(device.rssi)
-      });
-    }
-    const onError = (err) => {
-      console.log('Error while scanning:', err);
-    }
-
-    console.log('start scanning ...');
-    // this.ble && this.ble.startScan([]).subscribe(onDeviceFound, onError);
-  }
-
-  convertRSSIToDistance(rssi) {
-    return Math.pow(10, (rssi + 55) / (-33));
-  }
-
-  continuousScan() {
-    const self = this;
-    this.devices = [];
-    this.scanBLE();
-
-    setTimeout(() => {
-      // self.ble && self.ble.stopScan();
-      if (self.devices.length) {
-        self.geolocation.getCurrentPosition().then((response) => {
-          console.log('Location:', response);
-          if (response.coords) {
-            self.lastKnownLocation = self.geopositionToObject(response).coords;
-          }
-          self.sendUpdates();
-          // continue scanning
-          self.continuousScan();
-        }).catch((error) => {
-          console.log('Error getting location:', error);
-          // send updates anyway
-          // TODO: take into account headings and speed to estimate current location
-          self.sendUpdates();
-          // continue scanning
-          self.continuousScan();
-        });
-      } else {
-        // continue scanning indefinitely
-        self.continuousScan();
-      }
-    }, 3000);
-  }
-
-  geopositionToObject(geoposition) {
-    return {
-      timestamp: geoposition.timestamp,
-      coords: {
-        accuracy: geoposition.coords.accuracy,
-        altitude: geoposition.coords.altitude,
-        altitudeAccuracy: geoposition.coords.altitudeAccuracy,
-        heading: geoposition.coords.heading,
-        latitude: geoposition.coords.latitude,
-        longitude: geoposition.coords.longitude,
-        speed: geoposition.coords.speed
-      }
-    }
-  }
-
-  sendUpdates() {
-    if (this.devices.length && this.lastKnownLocation) {
-      // send updates
-      const obj = {
-        location: this.lastKnownLocation,
-        devices: this.devices
-      };
-      console.log('sending updates ...', obj);
-      this.http.post('http://gotrack.susan.to/update', obj)
-        .subscribe(() => {
-          console.log('sending updates success');
-        }, (err) => {
-          console.log('sending updates failed:', err);
-        });
-    }
   }
 }

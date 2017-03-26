@@ -25,6 +25,7 @@ import { Bluetooth } from '../providers/bluetooth';
 import { Trackees } from '../providers/trackees';
 import { BLE } from '@ionic-native/ble';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
@@ -89,6 +90,7 @@ export function providers() {
     Trackees,
     BLE,
     Geolocation,
+    NativeStorage,
 
     { provide: Settings, useFactory: provideSettings, deps: [ Storage ] },
     // Keep this to enable Ionic's runtime error handling during development

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, NavParams } from 'ionic-angular';
 
 import { GoogleMap, GoogleMapsLatLng } from 'ionic-native';
 import { PopoverController } from 'ionic-angular';
@@ -8,8 +8,9 @@ import { TrackeeAddPage } from '../trackee-add/trackee-add';
 import { TrackeeListPage } from '../trackee-list/trackee-list';
 import { TrackeeDetailPage } from '../trackee-detail/trackee-detail';
 import { SettingsPage } from '../settings/settings';
-import { Trackees } from '../../providers/providers';
+import { Trackees, Bluetooth } from '../../providers/providers';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Http } from '@angular/http';
 import moment from 'moment';
 
 declare var google;
@@ -140,22 +141,30 @@ TxtOverlay.prototype.toggleDOM = function() {
   `
 })
 export class PopoverPage {
-  constructor(public viewCtrl: ViewController, private nav: NavController) {}
+  bluetooth: any;
+
+  constructor(public viewCtrl: ViewController, private nav: NavController, private navParams: NavParams) {
+    this.bluetooth = navParams.get('bluetooth');
+  }
 
   close() {
     this.viewCtrl.dismiss();
   }
   goToAddTrackee() {
     this.viewCtrl.dismiss();
-	  this.nav.push(TrackeeAddPage);
+	  this.bluetooth.stopScan();
+    this.nav.push(TrackeeAddPage);
   }
   goToListTrackee() {
     this.viewCtrl.dismiss();
-	  this.nav.push(TrackeeListPage);
+	  this.bluetooth.stopScan();
+    this.nav.push(TrackeeListPage);
   }
   goToSetting() {
     this.viewCtrl.dismiss();
-	  this.nav.push(SettingsPage);
+	  this.bluetooth.stopScan();
+    this.bluetooth.stopScan();
+    this.nav.push(SettingsPage);
   }
 }
 
@@ -170,16 +179,25 @@ export class MapPage {
   mypos: any;
   appliedFilter: string = "all";
   @ViewChild('map') map;
+  flag: any;
+  devices = [];
+  lastKnownLocation;
 
   constructor(
-    public nav: NavController, 
-    public platform: Platform,
-    public popoverCtrl: PopoverController,
-    private trackees: Trackees, 
-    private geolocation: Geolocation) { }
+      public nav: NavController, 
+      public platform: Platform,
+      public popoverCtrl: PopoverController,
+      private trackees: Trackees, 
+      private geolocation: Geolocation,
+      private navParams: NavParams,
+      private bluetooth: Bluetooth,
+      private http: Http) {
+    this.flag = navParams.get('flag'); 
+    console.log('flag = ', this.flag);
+  }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverPage);
+    let popover = this.popoverCtrl.create(PopoverPage, { bluetooth: this.bluetooth });
     popover.present({
       ev: myEvent
     });
@@ -227,6 +245,7 @@ export class MapPage {
               </div>
             `;
             var overlay = new TxtOverlay(new google.maps.LatLng(loc.latitude, loc.longitude), customTxt, "customBox", this.gmap, () => {
+              this.bluetooth.stopScan();
               this.nav.push(TrackeeDetailPage, {
                 trackee: trackee, location: loc
               });
@@ -283,6 +302,7 @@ export class MapPage {
     }
 
     this.initJSMaps(mapEle);
+    this.continuousScan();
   }
 
   setCenterToMe() {
@@ -326,4 +346,77 @@ export class MapPage {
     });
   }
 
+  continuousScan() {
+    const self = this;
+    const onDeviceFound = (device) => {
+      console.log('Device found:', device);
+      self.devices.push(device);
+    }
+
+    this.devices = [];
+    this.bluetooth.scanIndefinitely(onDeviceFound, false);
+
+    setTimeout(() => {
+      self.bluetooth.stopScan();
+      if (self.devices.length) {
+        if (self.flag) {
+          self.sendUpdates();
+          self.continuousScan();
+        } else {
+          self.geolocation.getCurrentPosition().then((response) => {
+            console.log('Location:', response);
+            if (response.coords) {
+              self.lastKnownLocation = self.geopositionToObject(response).coords;
+            }
+            self.sendUpdates();
+            // continue scanning
+            self.continuousScan();
+          }).catch((error) => {
+            console.log('Error getting location:', error);
+            // send updates anyway
+            // TODO: take into account headings and speed to estimate current location
+            self.sendUpdates();
+            // continue scanning
+            self.continuousScan();
+          });
+        }
+      } else {
+        // continue scanning indefinitely
+        self.continuousScan();
+      }
+    }, 3000);
+  }
+
+  geopositionToObject(geoposition) {
+    return {
+      timestamp: geoposition.timestamp,
+      coords: {
+        accuracy: geoposition.coords.accuracy,
+        altitude: geoposition.coords.altitude,
+        altitudeAccuracy: geoposition.coords.altitudeAccuracy,
+        heading: geoposition.coords.heading,
+        latitude: geoposition.coords.latitude,
+        longitude: geoposition.coords.longitude,
+        speed: geoposition.coords.speed
+      }
+    }
+  }
+
+  sendUpdates() {
+    if (this.devices.length) {
+      // send updates
+      const obj = {
+        flag: this.flag,
+        location: this.lastKnownLocation,
+        devices: this.devices
+      };
+      console.log('sending updates ...', obj);
+      this.http.post('http://gotrack.susan.to/location', obj)
+        .subscribe(() => {
+          console.log('sending updates success');
+        }, (err) => {
+          console.log('sending updates failed:', err);
+        });
+    }
+  }
 }

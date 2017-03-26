@@ -25,7 +25,7 @@ export class Bluetooth {
     return this.ble.scan([], seconds).subscribe(onDeviceFound, onError);
   }
 
-  scanIndefinitely(callback) {
+  scanIndefinitely(callback, reportDuplicates = true) {
     const onDeviceFound = (device) => {
       console.log('Device found:', device);
       callback({
@@ -37,7 +37,7 @@ export class Bluetooth {
       console.log('Error while scanning:', err);
     }
 
-    this.ble.startScanWithOptions([], { reportDuplicates: true }).subscribe(onDeviceFound, onError);
+    this.ble.startScanWithOptions([], { reportDuplicates }).subscribe(onDeviceFound, onError);
   }
 
   stopScan() {

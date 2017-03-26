@@ -23,6 +23,7 @@
     "@ionic-native/core": "3.1.0",
     "@ionic-native/geolocation": "^3.2.2",
     "@ionic-native/http": "^3.2.2",
+    "@ionic-native/native-storage": "^3.2.3",
     "@ionic-native/splash-screen": "3.1.0",
     "@ionic-native/status-bar": "3.1.0",
     "@ionic/storage": "2.0.0",

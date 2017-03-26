@@ -9,11 +9,11 @@ import { MapPage } from '../map/map';
 export class GojekMenuPage {
 
   constructor(public nav: NavController) {
-      
+    
   }
   
-  goToMap() {
-    this.nav.push(MapPage);
+  goToMap(flag = undefined) {
+    this.nav.push(MapPage, { flag: flag });
   }
 
 }
